@@ -320,7 +320,7 @@
         </div>
       </div>
       <div class="hero-portrait">
-        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Portrait of Fauzan Ridani">
+        <img src="images/profile1.jpg" alt="Portrait of Fauzan Ridani">
       </div>
     </div>
   </section>
@@ -488,92 +488,4 @@
   }
   setTimeout(typeOnce, 500);
 
-  // ---- PROJECT DATA ----
-  const projectData = [
-    { id:'p1', category:'bot', title:'Gemini Discord Bot', tags:['Python','Gemini API','Discloud'],
-      image:'https://images.unsplash.com/photo-1614680376593-902f74a6cecb?auto=format&fit=crop&w=800&q=80',
-      short:'Interactive bot deployed on Discloud using the google-generativeai library.',
-      long:'This bot uses Discord Slash Commands (/gemini) to provide instant, contextual AI responses. The main challenge was optimizing API response time and hosting stability to handle concurrent requests without hitting rate limits.',
-      link:'https://discord.com/oauth2/authorize' },
-    { id:'p2', category:'auto', title:'Visual Asset Scraper', tags:['Selenium','BeautifulSoup'],
-      image:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80',
-      short:'Automated extraction script for collecting high-resolution game assets.',
-      long:'Built with Python and Selenium to navigate hidden DOM structures and handle lazy-loaded images. The script organizes output into structured folders by category and can pull hundreds of assets in under five minutes.',
-      link:'https://github.com/paperthink' },
-    { id:'p3', category:'bot', title:'Cinematic 3D Prompting', tags:['AI Image Gen','Prompt Design'],
-      image:'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=600&q=80',
-      short:'Prompt-engineering exploration for cinematic 3D animation aesthetics.',
-      long:'Structured prompts to guide image diffusion models on virtual camera angles, aspect ratios, and volumetric lighting reminiscent of Unreal Engine 5 — used to design visual concepts for stylized 3D animation.',
-      link:'#' },
-    { id:'p4', category:'system', title:'Android System Modding', tags:['Termux','Shizuku'],
-      image:'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80',
-      short:'Command-line utilities for advanced Android file management.',
-      long:'Combined the Termux environment with Wireless Debugging (Shizuku) to gain high-level shell access, used to unpack, extract, and modify split APK files and game assets on modern Android builds.',
-      link:'#' },
-    { id:'p5', category:'system', title:'Discord Profile Customization', tags:['UI/UX','Aesthetics'],
-      image:'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=600&q=80',
-      short:'Discord profile customization exploring border effects and layout tricks.',
-      long:"A small UI-aesthetics project combining Discord's profile settings with avatar placement tricks to give personal accounts a distinct visual identity.",
-      link:'#' },
-    { id:'p6', category:'auto', title:'Math Speed Analyzer', tags:['Python','Data Analysis'],
-      image:'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80',
-      short:'Performance analyzer for timed calculation practice.',
-      long:'Built for psychotest preparation. Records input timing during a 22.5-minute continuous calculation drill, then plots the results to help analyze speed stability and accuracy over time.',
-      link:'#' }
-  ];
-
-  const projectGrid = document.getElementById('projectGrid');
-  function renderProjects(filter){
-    projectGrid.innerHTML = '';
-    projectData
-      .filter(p => filter === 'all' || p.category === filter)
-      .forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.innerHTML = `
-          <div class="project-thumb"><img src="${p.image}" alt="${p.title}" loading="lazy"></div>
-          <div class="project-body">
-            <span class="project-cat">${p.category}</span>
-            <h3>${p.title}</h3>
-            <p>${p.short}</p>
-          </div>`;
-        card.addEventListener('click', () => openModal(p.id));
-        projectGrid.appendChild(card);
-      });
-  }
-  renderProjects('all');
-
-  document.getElementById('filterRow').addEventListener('click', (e) => {
-    if(!e.target.classList.contains('filter-btn')) return;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    renderProjects(e.target.dataset.filter);
-  });
-
-  // ---- MODAL ----
-  const modal = document.getElementById('projectModal');
-  function openModal(id){
-    const p = projectData.find(x => x.id === id);
-    document.getElementById('modalImg').src = p.image;
-    document.getElementById('modalImg').alt = p.title;
-    document.getElementById('modalCat').textContent = p.category;
-    document.getElementById('modalTitle').textContent = p.title;
-    document.getElementById('modalTags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
-    document.getElementById('modalDesc').textContent = p.long;
-    const link = document.getElementById('modalLink');
-    if(p.link && p.link !== '#'){ link.href = p.link; link.style.display = 'inline-flex'; }
-    else { link.style.display = 'none'; }
-    modal.classList.add('active');
-  }
-  function closeModal(){ modal.classList.remove('active'); }
-  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
-
-  // ---- CONTACT FORM (front-end only) ----
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    document.getElementById('formMsg').classList.add('show');
-    this.reset();
-  });
-</script>
-</body>
-</html>
+  // ---- PROJECT DATA --
