@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fauzan Ridani — Python Developer &amp; Automation Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --paper:#FAF9F5;
+    --paper-alt:#F1EEE5;
+    --ink:#181914;
+    --muted:#6D6A5F;
+    --line:#E2DED2;
+    --surface:#FFFFFF;
+    --accent:#1F6F5C;
+    --accent-ink:#FFFFFF;
+    --radius:6px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --max:1080px;
+    --header-bg:rgba(250,249,245,0.92);
+    --portrait-filter:grayscale(0.25);
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#141419;
+      --paper-alt:#1B1C21;
+      --ink:#F1EFE6;
+      --muted:#9C988C;
+      --line:#2B2C31;
+      --surface:#1A1B20;
+      --accent:#4FC3A1;
+      --accent-ink:#0F1012;
+      --header-bg:rgba(20,20,25,0.92);
+      --portrait-filter:grayscale(0.15) brightness(0.95);
+    }
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    font-size:16px;
+    transition:background-color 0.3s ease, color 0.3s ease;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; }
+
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; letter-spacing:-0.01em; }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1px; background:var(--accent); }
+
+  .section{ padding:96px 0; border-top:1px solid var(--line); }
+  .section--alt{ background:var(--paper-alt); }
+  .section-head{ max-width:560px; margin-bottom:48px; }
+  .section-head h2{ font-size:clamp(1.6rem, 3vw, 2.1rem); }
+  .section-head p{ color:var(--muted); margin-top:12px; font-size:1rem; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:var(--header-bg);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    transition:background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .brand{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
+  .brand span{ color:var(--accent); }
+  .nav-links{ display:flex; gap:32px; }
+  .nav-links a{
+    font-size:0.92rem; color:var(--muted);
+    padding:6px 0; border-bottom:1px solid transparent;
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .nav-links a:hover{ color:var(--ink); border-color:var(--ink); }
+  .nav-toggle{
+    display:none; background:none; border:1px solid var(--line);
+    border-radius:var(--radius); width:38px; height:38px;
+    align-items:center; justify-content:center; color:var(--ink); cursor:pointer;
+  }
+  .nav-right{ display:flex; align-items:center; gap:14px; }
+
+  .lang-switch{ position:relative; display:flex; align-items:center; }
+  .lang-switch i{ position:absolute; left:10px; font-size:0.78rem; color:var(--muted); pointer-events:none; }
+  .lang-switch select{
+    appearance:none; -webkit-appearance:none;
+    background:var(--surface); color:var(--ink);
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:7px 26px 7px 30px; font-size:0.82rem; font-family:var(--font-mono);
+    cursor:pointer; transition:border-color 0.2s ease;
+  }
+  .lang-switch select:hover, .lang-switch select:focus{ border-color:var(--accent); outline:none; }
+  .lang-switch::after{
+    content:'\f0d7'; font-family:'Font Awesome 6 Free'; font-weight:900;
+    position:absolute; right:9px; font-size:0.7rem; color:var(--muted); pointer-events:none;
+  }
+
+  @media (max-width:760px){
+    .nav-links{
+      position:absolute; top:68px; left:0; right:0;
+      background:var(--paper); border-bottom:1px solid var(--line);
+      flex-direction:column; gap:0; padding:8px 24px 16px;
+      display:none;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links a{ padding:12px 0; border-bottom:1px solid var(--line); width:100%; }
+    .nav-toggle{ display:flex; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:88px 0 96px; }
+  .hero-grid{
+    display:grid; grid-template-columns:1.3fr 0.7fr; gap:56px; align-items:center;
+  }
+  .hero-copy{ opacity:0; transform:translateY(14px); animation:rise 0.7s ease forwards 0.1s; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.4rem);
+    line-height:1.12;
+    margin-bottom:18px;
+  }
+  .hero h1 em{ font-style:normal; color:var(--accent); }
+  .role-line{
+    font-family:var(--font-mono);
+    font-size:1.05rem;
+    color:var(--muted);
+    margin-bottom:26px;
+    min-height:1.6em;
+  }
+  .role-line .cursor{ color:var(--accent); }
+  .hero-desc{ max-width:480px; color:var(--muted); margin-bottom:32px; }
+  .location-line{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:0.85rem; color:var(--muted);
+    margin-bottom:18px;
+  }
+  .location-line i{ color:var(--accent); }
+
+  .btn-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; border-radius:var(--radius);
+    font-size:0.92rem; font-weight:500; cursor:pointer;
+    border:1px solid var(--ink); transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-primary{ background:var(--ink); color:var(--paper); }
+  .btn-primary:hover{ background:var(--accent); border-color:var(--accent); }
+  .btn-ghost{ background:transparent; color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  .hero-portrait{
+    width:100%; aspect-ratio:4/5; border-radius:var(--radius);
+    overflow:hidden; border:1px solid var(--line); background:var(--surface);
+    opacity:0; animation:rise 0.7s ease forwards 0.25s;
+  }
+  .hero-portrait img{ width:100%; height:100%; object-fit:cover; filter:var(--portrait-filter); }
+
+  @media (max-width:820px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-portrait{ max-width:280px; margin:0 auto; order:-1; }
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  .about-grid p{ color:var(--muted); margin-bottom:16px; max-width:52ch; }
+
+  .skill-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  .skill-list span{
+    font-family:var(--font-mono); font-size:0.82rem;
+    padding:7px 14px; border:1px solid var(--line); border-radius:20px;
+    color:var(--ink); background:var(--surface);
+  }
+
+  .timeline{ display:flex; flex-direction:column; gap:22px; }
+  .timeline-item{ border-left:2px solid var(--line); padding-left:18px; position:relative; }
+  .timeline-item time{
+    font-family:var(--font-mono); font-size:0.78rem; color:var(--accent); display:block; margin-bottom:4px;
+  }
+  .timeline-item h4{ font-size:1rem; margin-bottom:4px; }
+  .timeline-item p{ font-size:0.92rem; color:var(--muted); margin:0; max-width:44ch; }
+
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
+
+  /* ---------- PROJECTS ---------- */
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px; }
+  .filter-btn{
+    background:transparent; border:1px solid var(--line); color:var(--muted);
+    padding:8px 18px; border-radius:20px; font-size:0.86rem; cursor:pointer;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .filter-btn.active, .filter-btn:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .project-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+  }
+  .project-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; cursor:pointer; display:flex; flex-direction:column;
+    transition:border-color 0.2s ease;
+  }
+  .project-card:hover{ border-color:var(--ink); }
+  .project-thumb{ aspect-ratio:16/10; overflow:hidden; background:var(--paper-alt); }
+  .project-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .project-body{ padding:20px; }
+  .project-cat{ font-family:var(--font-mono); font-size:0.72rem; color:var(--accent); display:block; margin-bottom:8px; }
+  .project-body h3{ font-size:1.05rem; margin-bottom:8px; }
+  .project-body p{ font-size:0.9rem; color:var(--muted); }
+
+  @media (max-width:900px){ .project-grid{ grid-template-columns:repeat(2, 1fr); } }
+  @media (max-width:600px){ .project-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- MODAL ---------- */
+  .modal{
+    position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center;
+    padding:20px; opacity:0; visibility:hidden; transition:opacity 0.25s ease, visibility 0.25s;
+  }
+  .modal.active{ opacity:1; visibility:visible; }
+  .modal-backdrop{ position:absolute; inset:0; background:rgba(20,19,15,0.55); }
+  .modal-card{
+    position:relative; z-index:1; width:100%; max-width:620px; max-height:85vh; overflow-y:auto;
+    background:var(--surface); border-radius:var(--radius); border:1px solid var(--line);
+  }
+  .modal-close{
+    position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%;
+    background:var(--surface); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:2;
+  }
+  .modal-close:hover{ border-color:var(--ink); }
+  .modal-img{ width:100%; aspect-ratio:16/9; overflow:hidden; }
+  .modal-img img{ width:100%; height:100%; object-fit:cover; }
+  .modal-info{ padding:28px; }
+  .modal-info .project-cat{ margin-bottom:10px; }
+  .modal-info h3{ font-size:1.4rem; margin-bottom:14px; }
+  .modal-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .modal-tags span{ font-family:var(--font-mono); font-size:0.76rem; padding:4px 10px; border:1px solid var(--line); border-radius:14px; color:var(--muted); }
+  .modal-info p.desc{ color:var(--muted); font-size:0.95rem; margin-bottom:20px; }
+  .modal-link{ display:inline-flex; align-items:center; gap:8px; font-size:0.9rem; font-weight:500; color:var(--accent); border-bottom:1px solid var(--accent); padding-bottom:2px; }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .testi-card{
+    background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+    border-radius:var(--radius); padding:28px;
+  }
+  .testi-card p{ font-size:0.98rem; color:var(--ink); margin-bottom:18px; }
+  .testi-card footer{ font-family:var(--font-mono); font-size:0.8rem; color:var(--muted); }
+  @media (max-width:760px){ .testi-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; }
+  .contact-info p{ color:var(--muted); margin-bottom:24px; max-width:40ch; }
+  .social-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .social-row a{
+    width:40px; height:40px; border:1px solid var(--line); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; color:var(--muted);
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .social-row a:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:0.82rem; color:var(--muted); margin-bottom:6px; }
+  .field input, .field textarea{
+    width:100%; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:11px 14px; font-family:inherit; font-size:0.94rem; color:var(--ink); resize:vertical;
+    transition:border-color 0.2s ease;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent); }
+  .form-msg{ font-size:0.88rem; color:var(--accent); margin-top:10px; display:none; }
+  .form-msg.show{ display:block; }
+
+  @media (max-width:820px){ .contact-grid{ grid-template-columns:1fr; gap:36px; } }
+
+  footer.site-footer{
+    border-top:1px solid var(--line); padding:28px 0; text-align:center;
+    color:var(--muted); font-size:0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand">Fauzan<span>.</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#projects" data-i18n="nav_work">Work</a>
+      <a href="#testimonials" data-i18n="nav_reviews">Reviews</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <i class="fa-solid fa-globe"></i>
+        <select id="langSelect" aria-label="Language / Bahasa">
+          <option value="en">EN</option>
+          <option value="id">ID</option>
+        </select>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow" data-i18n="eyebrow_portfolio">portfolio</div>
+        <h1 data-i18n-html="hero_h1">Hi, I'm Fauzan Ridani — I build things that <em>run themselves.</em></h1>
+        <div class="role-line"><span id="typewriter"></span><span class="cursor" id="typeCursor">|</span></div>
+        <div class="location-line"><i class="fa-solid fa-location-dot"></i><span data-i18n="location">Location, Indonesia</span></div>
+        <p class="hero-desc" data-i18n="hero_desc">I'm a developer focused on automation, AI integration, and practical tooling — turning repetitive, manual work into scripts and systems that just work.</p>
+        <div class="btn-row">
+          <a href="#projects" class="btn btn-primary" data-i18n="btn_view_work">View my work</a>
+          <a href="#contact" class="btn btn-ghost" data-i18n="btn_contact">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-portrait">
+        <img src="images/profile1.jpg" alt="Portrait of Fauzan Ridani">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section section--alt" id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="eyebrow_about">about</div>
+        <h2 data-i18n="about_h2">Profile &amp; journey</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <p data-i18n="about_p1">I'm a developer focused on automation and AI integration — turning repetitive, manual work into scripts and systems that run on their own. From scraping hundreds of visual assets with Selenium, to manipulating the Android environment through Termux, to wiring a Discord bot into the Gemini API, I'd rather solve a real problem than just collect tools.</p>
+          <p data-i18n="about_p2">Most of what I know comes from hands-on experimentation — trying, breaking, and fixing until a script actually holds up. I care less about listing technologies and more about whether a project does something useful: saving time, automating a repetitive task, or unlocking a new capability on the devices I use every day.</p>
+          <div class="skill-list">
+            <span>Python</span>
+            <span>Automation</span>
+            <span>Web Scraping</span>
+            <span>Selenium</span>
+            <span>Termux</span>
+            <span>Gemini API</span>
+            <span>Discord Bots</span>
+            <span>Prompt Engineering</span>
+          </div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <time>August 2026</time>
+            <h4 data-i18n="tl1_h">Discord AI Assistant</h4>
+            <p data-i18n="tl1_p">Built and deployed an interactive bot using Discord Slash Commands and Google Gemini AI.</p>
+          </div>
+          <div class="timeline-item">
+            <time>June 2026</time>
+            <h4 data-i18n="tl2_h">AI Visual Engineering</h4>
+            <p data-i18n="tl2_p">Explored prompt engineering to produce cinematic 3D animation-style visuals.</p>
+          </div>
+          <div class="timeline-item">
+            <time>April 2026</time>
+            <h4 data-i18n="tl3_h">Android System Modding</h4>
+            <p data-i18n="tl3_p">Combined Termux and wireless ADB access to unlock deeper file-system control on Android.</p>
+          </div>
+          <div class="timeline-item">
+            <time>February 2026</time>
+            <h4 data-i18n="tl4_h">Scraping Automation</h4>
+            <p data-i18n="tl4_p">Designed automated asset-extraction scripts for games using browser automation.</p>
+          </div>
+          <div class="timeline-item">
+            <time>December 2025</time>
+            <h4 data-i18n="tl5_h">Math Speed Analyzer</h4>
+            <p data-i18n="tl5_p">Built a Python tool to track and visualize calculation speed and accuracy over time.</p>
+          </div>
+          <div class="timeline-item">
+            <time>October 2025</time>
+            <h4 data-i18n="tl6_h">Java Fundamentals</h4>
+            <p data-i18n="tl6_p">Practiced core Java syntax and object-oriented programming principles.</p>
+          </div>
+          <div class="timeline-item">
+            <time>August 2025</time>
+            <h4 data-i18n="tl7_h">HTML Fundamentals</h4>
+            <p data-i18n="tl7_p">Learned semantic HTML structure, forms, and foundational CSS styling.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="eyebrow_work">work</div>
+        <h2 data-i18n="projects_h2">Selected projects</h2>
+        <p data-i18n="projects_sub">A few things I've built recently — click any card for the full story.</p>
+      </div>
+      <div class="filter-row" id="filterRow">
+        <button class="filter-btn active" data-filter="all" data-i18n="filter_all">All</button>
+        <button class="filter-btn" data-filter="bot" data-i18n="filter_bot">AI &amp; Bot</button>
+        <button class="filter-btn" data-filter="auto" data-i18n="filter_auto">Automation</button>
+        <button class="filter-btn" data-filter="system" data-i18n="filter_system">Systems</button>
+      </div>
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section section--alt" id="testimonials">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="eyebrow_reviews">reviews</div>
+        <h2 data-i18n="reviews_h2">What people say</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <p data-i18n="testi1_p">P.'s work on the Discord bot integration was flawless — the way they handled API rate limits showed real backend maturity.</p>
+          <footer data-i18n="testi1_footer">— Server Admin, Tech Community</footer>
+        </div>
+        <div class="testi-card">
+          <p data-i18n="testi2_p">The web scraping project stood out. Using Selenium to handle lazy-loading across hundreds of assets without breaking is genuinely impressive.</p>
+          <footer data-i18n="testi2_footer">— Senior Developer, Open Source Project</footer>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <div class="eyebrow" data-i18n="eyebrow_contact">contact</div>
+        <h2 data-i18n="contact_h2">Let's work together</h2>
+        <p data-i18n="contact_p">Have a project in mind or just want to say hi? My inbox is open.</p>
+        <a href="CV_P.pdf" download class="btn btn-primary" style="margin-bottom:28px;">
+          <i class="fa-solid fa-file-arrow-down"></i> <span data-i18n="btn_download_cv">Download CV</span>
+        </a>
+        <div class="social-row">
+          <a href="https://github.com/fauzan-ridani" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+          <a href="#" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="mailto:youremail@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <form id="contactForm">
+        <div class="field">
+          <label for="fName" data-i18n="form_name">Name</label>
+          <input type="text" id="fName" required>
+        </div>
+        <div class="field">
+          <label for="fEmail" data-i18n="form_email">Email</label>
+          <input type="email" id="fEmail" required>
+        </div>
+        <div class="field">
+          <label for="fMsg" data-i18n="form_message">Message</label>
+          <textarea id="fMsg" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-i18n="btn_send">Send message</button>
+        <p class="form-msg" id="formMsg" data-i18n="form_success">Thanks — your message has been noted.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap"><span data-i18n="footer_text">&copy; 2026 Fauzan Ridani — Built with care.</span></div>
+</footer>
+
+<!-- PROJECT MODAL -->
+<div class="modal" id="projectModal">
+  <div class="modal-backdrop" onclick="closeModal()"></div>
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-img"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-info">
+      <span class="project-cat" id="modalCat"></span>
+      <h3 id="modalTitle"></h3>
+      <div class="modal-tags" id="modalTags"></div>
+      <p class="desc" id="modalDesc"></p>
+      <a href="#" target="_blank" class="modal-link" id="modalLink" style="display:none;"><span data-i18n="modal_visit">Visit project</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- MOBILE NAV ----
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ---- TYPEWRITER (once) ----
+  const roleText = "Python Developer & Automation Specialist";
+  function typeOnce(){
+    const el = document.getElementById('typewriter');
+    const cursor = document.getElementById('typeCursor');
+    let i = 0;
+    (function step(){
+      if(i <= roleText.length){
+        el.textContent = roleText.slice(0, i);
+        i++;
+        setTimeout(step, 40);
+      } else {
+        setTimeout(() => cursor.style.opacity = '0', 900);
+      }
+    })();
+  }
+  setTimeout(typeOnce, 500);
+
+  // ---- TRANSLATIONS ----
+  // To add another language: add a new key (e.g. 'ja') with the same fields,
+  // add its <option> in the #langSelect dropdown in the HTML, done.
+  const translations = {
+    en: {
+      nav_about:'About', nav_work:'Work', nav_reviews:'Reviews', nav_contact:'Contact',
+      eyebrow_portfolio:'portfolio',
+      hero_h1:'Hi, I\'m Fauzan Ridani — I build things that <em>run themselves.</em>',
+      location:'Location, Indonesia',
+      hero_desc:'I\'m a developer focused on automation, AI integration, and practical tooling — turning repetitive, manual work into scripts and systems that just work.',
+      btn_view_work:'View my work', btn_contact:'Get in touch',
+      eyebrow_about:'about', about_h2:'Profile &amp; journey',
+      about_p1:'I\'m a developer focused on automation and AI integration — turning repetitive, manual work into scripts and systems that run on their own. From scraping hundreds of visual assets with Selenium, to manipulating the Android environment through Termux, to wiring a Discord bot into the Gemini API, I\'d rather solve a real problem than just collect tools.',
+      about_p2:'Most of what I know comes from hands-on experimentation — trying, breaking, and fixing until a script actually holds up. I care less about listing technologies and more about whether a project does something useful: saving time, automating a repetitive task, or unlocking a new capability on the devices I use every day.',
+      tl1_h:'Discord AI Assistant', tl1_p:'Built and deployed an interactive bot using Discord Slash Commands and Google Gemini AI.',
+      tl2_h:'AI Visual Engineering', tl2_p:'Explored prompt engineering to produce cinematic 3D animation-style visuals.',
+      tl3_h:'Android System Modding', tl3_p:'Combined Termux and wireless ADB access to unlock deeper file-system control on Android.',
+      tl4_h:'Scraping Automation', tl4_p:'Designed automated asset-extraction scripts for games using browser automation.',
+      tl5_h:'Math Speed Analyzer', tl5_p:'Built a Python tool to track and visualize calculation speed and accuracy over time.',
+      tl6_h:'Java Fundamentals', tl6_p:'Practiced core Java syntax and object-oriented programming principles.',
+      tl7_h:'HTML Fundamentals', tl7_p:'Learned semantic HTML structure, forms, and foundational CSS styling.',
+      eyebrow_work:'work', projects_h2:'Selected projects', projects_sub:'A few things I\'ve built recently — click any card for the full story.',
+      filter_all:'All', filter_bot:'AI &amp; Bot', filter_auto:'Automation', filter_system:'Systems',
+      eyebrow_reviews:'reviews', reviews_h2:'What people say',
+      testi1_p:'P.\'s work on the Discord bot integration was flawless — the way they handled API rate limits showed real backend maturity.', testi1_footer:'— Server Admin, Tech Community',
+      testi2_p:'The web scraping project stood out. Using Selenium to handle lazy-loading across hundreds of assets without breaking is genuinely impressive.', testi2_footer:'— Senior Developer, Open Source Project',
+      eyebrow_contact:'contact', contact_h2:'Let\'s work together', contact_p:'Have a project in mind or just want to say hi? My inbox is open.',
+      btn_download_cv:'Download CV',
+      form_name:'Name', form_email:'Email', form_message:'Message', btn_send:'Send message',
+      form_success:'Thanks — your message has been noted.',
+      footer_text:'&copy; 2026 Fauzan Ridani — Built with care.',
+      modal_visit:'Visit project',
+      cat_bot:'AI & Bot', cat_auto:'Automation', cat_system:'Systems'
+    },
+    id: {
+      nav_about:'Tentang', nav_work:'Karya', nav_reviews:'Ulasan', nav_contact:'Kontak',
+      eyebrow_portfolio:'portofolio',
+      hero_h1:'Hai, saya Fauzan Ridani — saya membangun hal-hal yang <em>berjalan sendiri.</em>',
+      location:'Lokasi, Indonesia',
+      hero_desc:'Saya seorang developer yang fokus pada otomasi, integrasi AI, dan tooling praktis — mengubah pekerjaan manual yang berulang menjadi skrip dan sistem yang benar-benar berjalan.',
+      btn_view_work:'Lihat karya saya', btn_contact:'Hubungi saya',
+      eyebrow_about:'tentang', about_h2:'Profil &amp; perjalanan',
+      about_p1:'Saya seorang developer yang fokus pada otomasi dan integrasi AI — mengubah pekerjaan manual yang berulang menjadi skrip dan sistem yang berjalan sendiri. Mulai dari scraping ratusan aset visual dengan Selenium, memodifikasi lingkungan Android lewat Termux, hingga menghubungkan bot Discord ke Gemini API — saya lebih suka menyelesaikan masalah nyata daripada sekadar mengumpulkan tools.',
+      about_p2:'Sebagian besar yang saya tahu berasal dari eksperimen langsung — mencoba, merusak, lalu memperbaiki sampai skripnya benar-benar berfungsi. Saya kurang peduli soal daftar teknologi, dan lebih peduli apakah sebuah proyek benar-benar berguna: menghemat waktu, mengotomasi tugas berulang, atau membuka kemampuan baru pada perangkat yang saya pakai setiap hari.',
+      tl1_h:'Asisten AI Discord', tl1_p:'Membangun dan menerapkan bot interaktif menggunakan Discord Slash Commands dan Google Gemini AI.',
+      tl2_h:'AI Visual Engineering', tl2_p:'Mengeksplorasi prompt engineering untuk menghasilkan visual bergaya animasi 3D sinematik.',
+      tl3_h:'Modifikasi Sistem Android', tl3_p:'Menggabungkan Termux dan akses ADB nirkabel untuk membuka kontrol file system yang lebih dalam di Android.',
+      tl4_h:'Otomasi Scraping', tl4_p:'Merancang skrip ekstraksi aset otomatis untuk game menggunakan otomasi browser.',
+      tl5_h:'Penganalisis Kecepatan Matematika', tl5_p:'Membangun tool Python untuk melacak dan memvisualisasikan kecepatan serta akurasi hitungan dari waktu ke waktu.',
+      tl6_h:'Dasar-dasar Java', tl6_p:'Berlatih sintaks inti Java dan prinsip pemrograman berorientasi objek.',
+      tl7_h:'Dasar-dasar HTML', tl7_p:'Mempelajari struktur HTML semantik, formulir, dan dasar-dasar styling CSS.',
+      eyebrow_work:'karya', projects_h2:'Proyek pilihan', projects_sub:'Beberapa hal yang baru-baru ini saya buat — klik kartu mana pun untuk cerita lengkapnya.',
+      filter_all:'Semua', filter_bot:'AI &amp; Bot', filter_auto:'Otomasi', filter_system:'Sistem',
+      eyebrow_reviews:'ulasan', reviews_h2:'Apa kata mereka',
+      testi1_p:'Kerja P. pada integrasi bot Discord sangat rapi — caranya menangani rate limit API menunjukkan kematangan backend yang nyata.', testi1_footer:'— Admin Server, Komunitas Tech',
+      testi2_p:'Proyek web scraping-nya menonjol. Menggunakan Selenium untuk menangani lazy-loading pada ratusan aset tanpa error benar-benar mengesankan.', testi2_footer:'— Senior Developer, Proyek Open Source',
+      eyebrow_contact:'kontak', contact_h2:'Mari bekerja sama', contact_p:'Punya proyek yang ingin didiskusikan atau sekadar mau menyapa? Kotak masuk saya terbuka.',
+      btn_download_cv:'Unduh CV',
+      form_name:'Nama', form_email:'Email', form_message:'Pesan', btn_send:'Kirim pesan',
+      form_success:'Terima kasih — pesan Anda sudah tercatat.',
+      footer_text:'&copy; 2026 Fauzan Ridani — Dibuat dengan penuh perhatian.',
+      modal_visit:'Kunjungi proyek',
+      cat_bot:'AI & Bot', cat_auto:'Otomasi', cat_system:'Sistem'
+    }
+  };
+
+  let currentLang = localStorage.getItem('site_lang') || 'en';
+
+  // ---- PROJECT DATA (bilingual short/long descriptions, title & tags stay as-is) ----
+  const projectData = [
+    { id:'p1', category:'bot', title:'Gemini Discord Bot', tags:['Python','Gemini API','Discord Slash Commands'],
+      image:'images/project1.jpg',
+      short:{ en:'A slash-command Discord bot that routes each request straight to the Gemini API and replies inline, hosted for continuous uptime.',
+              id:'Bot Discord berbasis slash-command yang meneruskan setiap permintaan langsung ke Gemini API dan membalas di dalam channel, di-hosting agar tetap aktif terus-menerus.' },
+      long:{ en:'Rather than a simple message-relay bot, this project wires Discord\'s native slash-command system directly to Google\'s Gemini API through the google-generativeai library — a /gemini call sends the user\'s prompt to the model and streams the reply back into the same channel. The bulk of the engineering effort went into the surrounding plumbing: validating and catching malformed or empty API responses, handling rate limits and transient errors without crashing the bot process, and structuring the event loop so multiple requests could run without blocking each other. Deployed and kept alive on Discloud\'s free-tier hosting, it\'s a compact project that taught me far more about asynchronous event handling and graceful error recovery than any tutorial could.',
+             id:'Alih-alih sekadar bot penerus pesan biasa, proyek ini menghubungkan sistem slash-command bawaan Discord langsung ke Gemini API milik Google melalui library google-generativeai — perintah /gemini mengirim prompt pengguna ke model dan menampilkan balasannya secara streaming di channel yang sama. Sebagian besar usaha engineering-nya ada di bagian "pipa" pendukung: memvalidasi dan menangkap respons API yang rusak atau kosong, menangani rate limit dan error sementara tanpa membuat bot crash, serta menyusun event loop agar beberapa permintaan bisa berjalan tanpa saling memblokir. Di-deploy dan dijaga tetap aktif di hosting gratis Discloud, ini proyek ringkas yang mengajarkan saya jauh lebih banyak soal penanganan event asinkron dan pemulihan error yang baik dibanding tutorial mana pun.' },
+      link:'https://discord.com/oauth2/authorize' },
+    { id:'p2', category:'auto', title:'Visual Asset Scraper', tags:['Python','Selenium','BeautifulSoup'],
+      image:'images/project2.jpg',
+      short:{ en:'An automated extraction pipeline that pulls hundreds of high-resolution game assets from dynamically-loaded pages in minutes.',
+              id:'Pipeline ekstraksi otomatis yang menarik ratusan aset game beresolusi tinggi dari halaman yang dimuat secara dinamis, hanya dalam hitungan menit.' },
+      long:{ en:'Built with Python, Selenium, and BeautifulSoup to navigate pages that hide content behind lazy-loaded images and deeply nested DOM structures — the kind of layout that breaks a plain requests-based scraper. Selenium drives a headless browser to trigger lazy-load events and expose the real image URLs, while BeautifulSoup parses the resulting markup to extract and validate asset links. Output is automatically sorted into structured folders by category, and the full pipeline can pull several hundred assets in under five minutes without manual intervention.',
+             id:'Dibangun dengan Python, Selenium, dan BeautifulSoup untuk menjelajahi halaman yang menyembunyikan konten di balik gambar lazy-load dan struktur DOM yang bertingkat dalam — jenis layout yang biasanya membuat scraper berbasis requests biasa gagal. Selenium menjalankan browser headless untuk memicu event lazy-load dan mengungkap URL gambar asli, sementara BeautifulSoup mem-parsing markup hasilnya untuk mengekstrak dan memvalidasi tautan aset. Hasilnya otomatis disusun ke dalam folder terstruktur berdasarkan kategori, dan seluruh pipeline bisa menarik beberapa ratus aset dalam waktu kurang dari lima menit tanpa campur tangan manual.' },
+      link:'https://github.com/fauzan-ridani/Visual-Asset-Scraper' },
+    { id:'p3', category:'bot', title:'Prompt Engineering', tags:['AI Tools','Prompt Design'],
+      image:'images/project3.jpg',
+      short:{ en:'A systematic approach to prompt design, aimed at getting consistent, high-quality output from AI models on the first try.',
+              id:'Pendekatan sistematis dalam merancang prompt, bertujuan mendapatkan output berkualitas tinggi dan konsisten dari model AI sejak percobaan pertama.' },
+      long:{ en:'Instead of iterating blindly on a model until something looks right, this work structures prompts around explicit parameters — style, context, constraints, and desired format — so the output matches intent more reliably. Applied across both text and image generation models, the practice involves breaking a request into its component parts, testing how each parameter shifts the result, and building reusable prompt patterns rather than one-off phrasing. The goal is repeatability: prompts that produce the intended result consistently, not just occasionally.',
+             id:'Alih-alih coba-coba secara acak pada sebuah model sampai hasilnya terlihat pas, pekerjaan ini menyusun prompt berdasarkan parameter yang eksplisit — gaya, konteks, batasan, dan format yang diinginkan — sehingga output lebih konsisten sesuai maksud. Diterapkan pada model generasi teks maupun gambar, praktik ini melibatkan pemecahan permintaan menjadi bagian-bagian komponennya, menguji bagaimana tiap parameter mengubah hasil, dan membangun pola prompt yang bisa dipakai ulang, bukan sekadar kalimat sekali pakai. Tujuannya adalah repeatability: prompt yang menghasilkan hasil yang diinginkan secara konsisten, bukan hanya sesekali.' },
+      link:'#' },
+    { id:'p4', category:'system', title:'Android System Modding', tags:['Termux','Shizuku','ADB'],
+      image:'images/project4.jpg',
+      short:{ en:'Command-line tooling that combines Termux and wireless ADB debugging to unlock deeper file-system access on modern Android builds.',
+              id:'Tooling command-line yang menggabungkan Termux dan debugging ADB nirkabel untuk membuka akses file-system yang lebih dalam pada build Android modern.' },
+      long:{ en:'By pairing the Termux Linux environment with Shizuku\'s wireless debugging bridge, this project gains shell-level access that\'s normally locked down on non-rooted Android devices. That access is used to unpack, inspect, and modify split APK packages and bundled game assets — tasks that typically require a full root install. The result is a set of practical command-line utilities for advanced file management and app modification, built without compromising the device\'s stock system integrity.',
+             id:'Dengan memasangkan lingkungan Linux Termux bersama jembatan debugging nirkabel dari Shizuku, proyek ini memperoleh akses tingkat shell yang biasanya terkunci pada perangkat Android non-root. Akses tersebut digunakan untuk membongkar, memeriksa, dan memodifikasi paket split APK serta aset game bawaan — tugas yang biasanya membutuhkan instalasi root penuh. Hasilnya adalah sekumpulan utilitas command-line praktis untuk manajemen file dan modifikasi aplikasi tingkat lanjut, dibangun tanpa mengorbankan integritas sistem bawaan perangkat.' },
+      link:'#' },
+    { id:'p5', category:'system', title:'HTML Fundamentals', tags:['HTML','CSS'],
+      image:'images/project5.jpg',
+      short:{ en:'Foundational web development work covering semantic HTML structure, forms, and core CSS styling.',
+              id:'Pekerjaan dasar pengembangan web yang mencakup struktur HTML semantik, formulir, dan styling CSS inti.' },
+      long:{ en:'This project covers the fundamentals that everything else on the web builds on: semantic HTML tags, page and document structure, form elements, and the basics of CSS for layout and styling. Rather than treating it as throwaway practice, it was approached as a foundation — understanding how a browser actually parses and renders a page before relying on frameworks to do it automatically.',
+             id:'Proyek ini mencakup fondasi yang menjadi dasar segala hal lain di web: tag HTML semantik, struktur halaman dan dokumen, elemen formulir, serta dasar-dasar CSS untuk layout dan styling. Alih-alih dianggap sebagai latihan yang bisa dibuang, ini didekati sebagai fondasi — memahami bagaimana browser sebenarnya mem-parsing dan me-render sebuah halaman sebelum mengandalkan framework untuk melakukannya secara otomatis.' },
+      link:'#' },
+    { id:'p6', category:'auto', title:'Math Speed Analyzer', tags:['Python','Data Analysis','Matplotlib'],
+      image:'images/project6.jpg',
+      short:{ en:'A performance-tracking tool that times and visualizes calculation speed and accuracy across a sustained practice session.',
+              id:'Tool pelacak performa yang mengukur waktu dan memvisualisasikan kecepatan serta akurasi hitungan selama sesi latihan berkelanjutan.' },
+      long:{ en:'Built to support psychometric test preparation, this script records precise input timing during a continuous 22.5-minute arithmetic drill, then processes the results using Python\'s data analysis and plotting tools. Rather than reporting just a final score, it plots speed and accuracy over time, making it possible to spot fatigue patterns, inconsistent pacing, or accuracy drop-off in specific stretches of the session — details a simple pass/fail score would hide.',
+             id:'Dibangun untuk mendukung persiapan tes psikometri, skrip ini mencatat waktu input secara presisi selama sesi latihan aritmetika berkelanjutan 22,5 menit, lalu memproses hasilnya menggunakan tool analisis data dan plotting Python. Alih-alih hanya melaporkan skor akhir, tool ini memplot kecepatan dan akurasi dari waktu ke waktu, sehingga bisa mengenali pola kelelahan, ritme yang tidak konsisten, atau penurunan akurasi di bagian tertentu dari sesi — detail yang akan tersembunyi jika hanya dilaporkan skor lulus/tidak lulus.' },
+      link:'#' },
+    { id:'p7', category:'system', title:'Java Fundamentals', tags:['Java','OOP'],
+      image:'images/project7.jpg',
+      short:{ en:'Structured practice in core Java syntax and object-oriented fundamentals — classes, objects, and control flow.',
+              id:'Latihan terstruktur dalam sintaks inti Java dan fondasi berorientasi objek — class, object, dan alur kontrol.' },
+      long:{ en:'This project covers the foundational building blocks of Java: variable types, control flow, and the object-oriented principles — classes, objects, encapsulation — that the language is built around. Working through these fundamentals in a statically-typed language provided a useful contrast to the more dynamic, script-first tools used elsewhere in this portfolio, and reinforced discipline around type safety and program structure.',
+             id:'Proyek ini mencakup blok bangunan fondasi Java: tipe variabel, alur kontrol, dan prinsip berorientasi objek — class, object, enkapsulasi — yang menjadi dasar bahasa ini. Mengerjakan fondasi ini dalam bahasa yang bertipe statis memberikan kontras yang berguna dibanding tool yang lebih dinamis dan script-first di bagian lain portofolio ini, sekaligus memperkuat disiplin soal keamanan tipe dan struktur program.' },
+      link:'#' }
+  ];
+
+  const projectGrid = document.getElementById('projectGrid');
+  let currentFilter = 'all';
+  function renderProjects(filter){
+    currentFilter = filter;
+    const catLabels = translations[currentLang];
+    projectGrid.innerHTML = '';
+    projectData
+      .filter(p => filter === 'all' || p.category === filter)
+      .forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.innerHTML = `
+          <div class="project-thumb"><img src="${p.image}" alt="${p.title}" loading="lazy"></div>
+          <div class="project-body">
+            <span class="project-cat">${catLabels['cat_' + p.category]}</span>
+            <h3>${p.title}</h3>
+            <p>${p.short[currentLang]}</p>
+          </div>`;
+        card.addEventListener('click', () => openModal(p.id));
+        projectGrid.appendChild(card);
+      });
+  }
+  renderProjects('all');
+
+  document.getElementById('filterRow').addEventListener('click', (e) => {
+    if(!e.target.classList.contains('filter-btn')) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    renderProjects(e.target.dataset.filter);
+  });
+
+  // ---- MODAL ----
+  const modal = document.getElementById('projectModal');
+  let activeModalId = null;
+  function openModal(id){
+    activeModalId = id;
+    const p = projectData.find(x => x.id === id);
+    const catLabels = translations[currentLang];
+    document.getElementById('modalImg').src = p.image;
+    document.getElementById('modalImg').alt = p.title;
+    document.getElementById('modalCat').textContent = catLabels['cat_' + p.category];
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalTags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join('');
+    document.getElementById('modalDesc').textContent = p.long[currentLang];
+    const link = document.getElementById('modalLink');
+    if(p.link && p.link !== '#'){ link.href = p.link; link.style.display = 'inline-flex'; }
+    else { link.style.display = 'none'; }
+    modal.classList.add('active');
+  }
+  function closeModal(){ modal.classList.remove('active'); activeModalId = null; }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+  // ---- CONTACT FORM (front-end only) ----
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formMsg').classList.add('show');
+    this.reset();
+  });
+
+  // ---- LANGUAGE SWITCHER ----
+  function applyLanguage(lang){
+    if(!translations[lang]) lang = 'en';
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    const dict = translations[lang];
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    // Re-render dynamic content (project cards + open modal, if any) in the new language
+    renderProjects(currentFilter);
+    if(activeModalId){ openModal(activeModalId); }
+
+    localStorage.setItem('site_lang', lang);
+    const select = document.getElementById('langSelect');
+    if(select) select.value = lang;
+  }
+
+  document.getElementById('langSelect').addEventListener('change', (e) => applyLanguage(e.target.value));
+  applyLanguage(currentLang);
+
+</script>
+</body>
+</html>
